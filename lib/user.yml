@@ -1,0 +1,28 @@
+first_name:
+  type: text
+  step: 1 
+  group: name 
+  placeholder: "First Name" 
+  group_label: Name
+  required: true
+middle_initial:
+  type: text
+  step: 1 
+  placeholder: "Mi" 
+  group: name 
+last_name:
+  type: text
+  step: 1 
+  group: name 
+  placeholder: "Last Name" 
+  required: true
+email:
+  label: Email
+  type: text
+  step: 1 
+  required: true
+password:
+  label: Password
+  type: password 
+  step: 1 
+  required: true

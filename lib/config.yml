@@ -1,0 +1,4 @@
+local:
+development:
+  couch_box: localhost 
+  port: 5984
