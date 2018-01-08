@@ -10,14 +10,19 @@ class ServiceBase
   attr_accessor :db, :doc, :config, :id, :db_name 
 
   def initialize(db_name,config = nil)
-    config =  File.join File.dirname(__FILE__),'config.yml' if config.nil?
+    config_file =  config.nil? ? 'config.yml' : config
+    config =  File.join File.dirname(__FILE__), config_file
     @config = load_config(config) 
     @db_name = db_name
     raise "configuration not hash as expected got #{@config.class}" unless @config.kind_of?(Hash)
     @db = create_db_connection(@db_name,@config)
   end
+  def set_config_root(full_path)
+      @obj_config_root = full_path 
+  end 
   def get_fields(name) 
-      entity_config =  File.join File.dirname(__FILE__),"#{name}.yml"
+      conf_root = @obj_config_root || File.dirname(__FILE__)
+      entity_config = File.join conf_root ,"#{name}.yml"
       fields = YAML.load_file(entity_config)
       return fields 
   end
