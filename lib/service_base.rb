@@ -7,7 +7,7 @@ require 'config_helper'
 
 class ServiceBase
   include ConfigLoader
-  attr_accessor :db, :doc, :config, :id, :db_name 
+  attr_accessor :db, :doc, :config, :id, :db_name, :fields
 
   def initialize(db_name,config = nil)
     config_file =  config.nil? ? 'config.yml' : config
@@ -16,17 +16,21 @@ class ServiceBase
     @db_name = db_name
     raise "configuration not hash as expected got #{@config.class}" unless @config.kind_of?(Hash)
     @db = create_db_connection(@db_name,@config)
+    @fields = Hash.new
+    self.add_fields_config("#{db_name}.yml")
   end
   def set_config_root(full_path)
       @obj_config_root = full_path 
   end 
   def get_fields(name) 
-      conf_root = @obj_config_root || File.dirname(__FILE__)
-      entity_config = File.join conf_root ,"#{name}.yml"
-      fields = YAML.load_file(entity_config)
-      return fields 
+      return @fields 
   end
-
+  def add_fields_config(config)
+      conf_root = @obj_config_root || File.dirname(__FILE__)
+      entity_config = File.join conf_root , config
+      fields = YAML.load_file(entity_config)
+      @fields.merge!(fields) 
+  end 
 ## this shit is web framework specific ... not part of model ( need form generator )
 #  def get_form_fields(name)
 #      puts "FORM FIELDS CALLED WITH #{name}"
