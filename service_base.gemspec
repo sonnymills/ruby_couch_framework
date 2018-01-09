@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'ruby_couch_framework'
+  s.name        = 'service_base'
   s.version     = '0.0.1'
   s.date        = '2018-01-10'
   s.summary     = "kill rails with couch"

@@ -22,7 +22,7 @@ class ServiceBase
   def set_config_root(full_path)
       @obj_config_root = full_path 
   end 
-  def get_fields(name) 
+  def get_fields(name = nil) 
       return @fields 
   end
   def add_fields_config(config)
