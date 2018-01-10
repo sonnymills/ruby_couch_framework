@@ -11,7 +11,8 @@ class ServiceBase
 
   def initialize(db_name,config = nil)
     config_file =  config.nil? ? 'config.yml' : config
-    config =  File.join File.dirname(__FILE__), config_file
+    @config_root = File.dirname(caller.first.split(':').first)
+    config =  File.join @config_root, config_file
     @config = load_config(config) 
     @db_name = db_name
     raise "configuration not hash as expected got #{@config.class}" unless @config.kind_of?(Hash)
@@ -20,14 +21,13 @@ class ServiceBase
     self.add_fields_config("#{db_name}.yml")
   end
   def set_config_root(full_path)
-      @obj_config_root = full_path 
+      @config_root = full_path 
   end 
   def get_fields(name = nil) 
       return @fields 
   end
   def add_fields_config(config)
-      conf_root = @obj_config_root || File.dirname(__FILE__)
-      entity_config = File.join conf_root , config
+      entity_config = File.join @config_root , config
       fields = YAML.load_file(entity_config)
       @fields.merge!(fields) 
   end 
