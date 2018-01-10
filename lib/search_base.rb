@@ -3,7 +3,7 @@ require 'json/ext'
 require 'couchrest'
 require 'service_base'
 
-class Search < ServiceBase
+class SearchBase < ServiceBase
 	attr_accessor :db, :doc
 
 	def find(view,query)
