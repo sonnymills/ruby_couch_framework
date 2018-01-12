@@ -1,18 +1,15 @@
 class DevJsonStore
   require 'securerandom'
-  def initialize(db_name,config)
+  def initialize(db_name,config_root)
       @loaded_id = nil 
       @db_name = db_name 
+      @config_root = config_root
       @db_hash = load_file_db(@db_name)
       @db_hash = Hash.new unless @db_hash.kind_of?(Hash)
-      
   end
   def get_db_file(db_name)
-    root = File.dirname(caller.first.split(':').first)
-    
-    FileUtils.mkdir_p("#{root}/development")unless File.directory?("#{root}/development")
-   
-    return File.join(root, "development/#{db_name}_db.yml")
+    FileUtils.mkdir_p("#{@config_root}/development")unless File.directory?("#{@config_root}/development")
+    return File.join(@config_root, "development/#{db_name}_db.yml")
   end
   def load_file_db(db_name)
       db_file = get_db_file(db_name)
@@ -64,11 +61,8 @@ class DevJsonStore
       block = params[:block] || 'fields'
       ( stub, complex_key) = view.split('/')
       key = complex_key.split('-').shift  
-      #puts "this is my block #{block} this is my key #{key} and params #{params}"
       hits =  Hash.new
       @db_hash.each do |k,v| 
-        #puts "I have a V #{v}"
-        #puts "I have a VB #{v[block]}"
         begin 
           hits[k] = v if v[block][key] == params[:q]
         rescue Exception => e

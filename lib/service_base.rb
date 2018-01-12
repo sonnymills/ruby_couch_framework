@@ -16,7 +16,7 @@ class ServiceBase
     @config = load_config(config) 
     @db_name = db_name
     raise "configuration not hash as expected got #{@config.class}" unless @config.kind_of?(Hash)
-    @db = create_db_connection(@db_name,@config)
+    @db = create_db_connection(@db_name,@config_root)
     @fields = Hash.new
     self.add_fields_config("#{db_name}.yml")
   end
@@ -81,12 +81,12 @@ class ServiceBase
     resp = @db.view(view,query)
     resp
   end
-  def create_db_connection(db_name, config)
+  def create_db_connection(db_name, config_root)
       if  ENV['MODEL_ENV'] && !ENV['MODEL_ENV'].eql?('local') 
         server = CouchRest.new
         db = CouchRest.database!("http://#{config['couch_box']}:#{config['port']}/#{db_name}")
       else
-        db = DevJsonStore.new(db_name,config)
+        db = DevJsonStore.new(db_name,config_root)
       end
       return db 
   end
@@ -107,9 +107,7 @@ class ServiceBase
      return @doc['protected'][key] || false
   end
   def merge_hash(data)
-        #puts "trying to merge with #{data}"
         data.each do |a,v| 
-          #puts "MERGE trying to set #{a} to #{v}"
           instance_variable_set("@#{a}",v)
           i_v = instance_variable_get("@#{a}")
           #puts "value is now set to #{i_v}"
@@ -127,7 +125,6 @@ class ServiceBase
       return path 
   end
   def create_and_populate(data)
-      #puts "trying to create with #{data}"
       self.create
       self.merge_hash(data)
       self.save
