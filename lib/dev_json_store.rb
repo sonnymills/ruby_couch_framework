@@ -8,7 +8,11 @@ class DevJsonStore
       
   end
   def get_db_file(db_name)
-    return File.join(File.dirname(__FILE__), "development/#{db_name}_db.yml")
+    root = File.dirname(caller.first.split(':').first)
+    
+    FileUtils.mkdir_p("#{root}/development")unless File.directory?("#{root}/development")
+   
+    return File.join(root, "development/#{db_name}_db.yml")
   end
   def load_file_db(db_name)
       db_file = get_db_file(db_name)

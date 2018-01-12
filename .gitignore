@@ -1,6 +1,7 @@
 *.swp
 *.gem
 *.rbc
+/lib/development/
 /.config
 /coverage/
 /InstalledFiles

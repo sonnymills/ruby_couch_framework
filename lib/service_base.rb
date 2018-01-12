@@ -31,30 +31,6 @@ class ServiceBase
       fields = YAML.load_file(entity_config)
       @fields.merge!(fields) 
   end 
-## this shit is web framework specific ... not part of model ( need form generator )
-#  def get_form_fields(name)
-#      puts "FORM FIELDS CALLED WITH #{name}"
-#      out_fields = Hash.new 
-#      raw_fields = get_fields # calls the child implementation
-#      # collect groups together 
-#      raw_fields.each do |field_name,fields_hash| 
-#        if fields_hash.has_key?('group')
-#           group_block = out_fields[fields_hash['group']] || Hash.new
-#           group_block['elements'] = Hash.new unless group_block.has_key?('elements')
-#           group_block['elements'][field_name] = fields_hash
-#           group_block['type'] = 'group'  
-#           group_block['tip'] = fields_hash['group_tip'] if fields_hash.has_key?('group_tip')
-#           group_block['label'] = fields_hash['group_label'] if fields_hash.has_key?('group_label')
-#           group_block['step'] = fields_hash['step']
-#           
-#           out_fields[fields_hash['group']] = group_block
-#            
-#       else 
-#          out_fields[field_name] = fields_hash
-#        end
-#      end
-#      return out_fields
-#  end
   def create
       @created = true 
       @id = seed_doc(get_fields) 
