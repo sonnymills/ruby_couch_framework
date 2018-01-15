@@ -2,6 +2,7 @@
 *.gem
 *.rbc
 /lib/development/
+/spec/development/
 /.config
 /coverage/
 /InstalledFiles
