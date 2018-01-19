@@ -16,7 +16,7 @@ class SearchBase < ServiceBase
   def get_ids_with_details(search_hash, params = {})
       results = Array.new
       params[:block] = params[:block] || 'fields'
-      #puts "set block to #{params[:block]}"
+      puts "set block to #{params[:block]}"
       
       search_hash.each do |k,v| 
 					params[:key] = v

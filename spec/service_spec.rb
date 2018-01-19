@@ -22,7 +22,11 @@ describe Test do
     expect(@t.get_fields.has_key?('phone_number')).to be
     @t.add_fields_config('nested/test.yml') 
     expect(@t.get_fields.has_key?('nested_first_name')).to be
-
+  end
+  it "can handle configs with just a path" do 
+    @t.add_fields_config('nested') 
+    expect(@t.get_fields.has_key?('first_file')).to be
+    expect(@t.get_fields.has_key?('second_file')).to be
   end
   it "it has a default fields hash" do
     expect(@t.get_fields.kind_of?(Hash)).to be true 

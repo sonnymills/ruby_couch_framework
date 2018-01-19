@@ -27,9 +27,19 @@ class ServiceBase
       return @fields 
   end
   def add_fields_config(config)
-      entity_config = File.join @config_root , config
-      fields = YAML.load_file(entity_config)
-      @fields.merge!(fields) 
+        entity_config = File.join @config_root , config
+      if File.file?(entity_config)
+        fields = YAML.load_file(entity_config)
+        @fields.merge!(fields) 
+      elsif File.directory?(entity_config)  
+        dir_files = Dir["#{entity_config}/*yml"]
+        dir_files.each do |f|
+          fields = YAML.load_file(f)
+          @fields.merge!(fields) 
+        end
+      else
+        raise Error, "unable to match #{entity_config} with file or directory" 
+      end
   end 
   def create
       @created = true 

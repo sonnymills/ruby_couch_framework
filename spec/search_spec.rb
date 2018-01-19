@@ -22,7 +22,7 @@ describe SearchBase do
     expect(@s.get_all_ids).to be_kind_of(Array)
   end
   it "can get only ids with specific attribute" do
-     puts "inspecting E #{@e.inspect}"
+     puts "inspecting s #{@s.inspect}"
      ids = @s.get_ids_with_details('name'=> @now)
      expect(ids.length).to eq(1)
   end
