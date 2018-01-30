@@ -20,6 +20,7 @@ class ServiceBase
     @fields = Hash.new
     self.add_fields_config("#{db_name}.yml")
   end
+
   def set_config_root(full_path)
       @config_root = full_path 
   end 
@@ -38,7 +39,7 @@ class ServiceBase
           @fields.merge!(fields) 
         end
       else
-        raise Error, "unable to match #{entity_config} with file or directory" 
+        raise "unable to match #{entity_config} with file or directory" 
       end
   end 
   def create
@@ -150,6 +151,9 @@ class ServiceBase
   end
   def get_fields_by_step(step)
       return self.get_fields.select{|k,v| v['step'].to_s == step.to_s}
+  end
+  def get_step_for_field(field)
+      return self.get_fields[field]['step']
   end
   def get_next_step(current_step) 
         

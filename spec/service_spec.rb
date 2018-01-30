@@ -9,7 +9,7 @@ describe Test do
   end
   it "can set a different root for configs" do
     #t = Test.new
-    #t.set_config_root(File.dirname(__FILE__))
+    @t.set_config_root(File.dirname(__FILE__))
     expect(@t.get_fields.kind_of?(Hash)).to be true 
   end  
   it "can set additional config and override" do 
@@ -33,15 +33,14 @@ describe Test do
   end
   it "can save a user" do 
      @t.create 
-    expect(@t.save).to be 
+     expect(@t.save).to be 
   end
   it "has an id after load" do 
-      @t.create 
-      id = @t.id 
-      t = Test.new
-      t.load(id)
-      expect(t.id).to eq(@t.id)
-
+     @t.create 
+     id = @t.id 
+     t = Test.new
+     t.load(id)
+     expect(t.id).to eq(@t.id)
   end 
   it "can create a user and get an id" do
      @t.create 
@@ -66,6 +65,12 @@ describe Test do
      lt = Test.new
      lt.load(@t.id)
      expect(lt.email).to eq(email_addy)
+  end
+  it "can get fields for step" do
+    expect(@t.get_fields_by_step(2).length).to eq 2
+  end
+  it "can get a step for a field" do 
+    expect(@t.get_step_for_field('step_2_name')).to eq 2 
   end
 end
 
