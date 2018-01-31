@@ -157,7 +157,10 @@ class ServiceBase
   end
   def get_next_step(current_step) 
         
-        steps = get_fields.each_value.map{|v| v['step']}.uniq
+        #steps = get_fields.each_value.map{|v| v['step']}.uniq
+        steps = self.get_fields.map{|k,v| v['step']}
+        steps.uniq! 
+        steps.sort!
        # i = steps.index(current_step ? current_step : 1 ).to_i
        # puts "this is the current step @#{current_step}@"
         ns = 0

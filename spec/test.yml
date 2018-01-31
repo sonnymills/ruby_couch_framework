@@ -1,13 +1,13 @@
 first_name:
   type: text
-  step: 1 
+  step: 2 
   group: name 
   placeholder: "First Name" 
   group_label: Name
   required: true
 middle_initial:
   type: text
-  step: 1 
+  step: 3 
   placeholder: "Mi" 
   group: name 
 last_name:
@@ -37,4 +37,4 @@ step_2_phone:
 step_3_phone: 
   label: this is the step 2 phone
   type: text
-  step: 3 
+  step: 1 

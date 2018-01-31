@@ -67,7 +67,7 @@ describe Test do
      expect(lt.email).to eq(email_addy)
   end
   it "can get fields for step" do
-    expect(@t.get_fields_by_step(2).length).to eq 2
+    expect(@t.get_fields_by_step(2).length).to eq 3
   end
   it "can get a step for a field" do 
     expect(@t.get_step_for_field('step_2_name')).to eq 2 
