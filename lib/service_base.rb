@@ -31,17 +31,23 @@ class ServiceBase
         entity_config = File.join @config_root , config
       if File.file?(entity_config)
         fields = YAML.load_file(entity_config)
-        @fields.merge!(fields) 
+        merge_fields(fields) 
       elsif File.directory?(entity_config)  
         dir_files = Dir["#{entity_config}/*yml"]
         dir_files.each do |f|
           fields = YAML.load_file(f)
-          @fields.merge!(fields) 
+          merge_fields(fields) 
         end
       else
         raise "unable to match #{entity_config} with file or directory" 
       end
   end 
+  def merge_fields(fields)
+      if (fields.keys & @fields.keys).length > 0 #check for hash key intersection
+         raise "there are duplicate fields #{fields.keys & @fields.keys}" 
+      end
+       @fields.merge!(fields) 
+  end
   def create
       @created = true 
       @id = seed_doc(get_fields) 

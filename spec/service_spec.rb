@@ -23,6 +23,9 @@ describe Test do
     @t.add_fields_config('nested/test.yml') 
     expect(@t.get_fields.has_key?('nested_first_name')).to be
   end
+  it "throws a descriptive error when a key is duplicated" do 
+    expect{@t.add_fields_config('same_name.yml')}.to raise_error(/there are duplicate/) 
+  end
   it "can handle configs with just a path" do 
     @t.add_fields_config('nested') 
     expect(@t.get_fields.has_key?('first_file')).to be
