@@ -34,4 +34,7 @@ step_2_phone:
   label: this is the step 2 phone
   type: text
   step: 2 
-
+step_3_phone: 
+  label: this is the step 2 phone
+  type: text
+  step: 3 

@@ -72,5 +72,12 @@ describe Test do
   it "can get a step for a field" do 
     expect(@t.get_step_for_field('step_2_name')).to eq 2 
   end
+  it "can get the next step" do 
+    @t.add_fields_config('nested') 
+    expect(@t.get_next_step(1)).to eq 2
+    expect(@t.get_next_step(2)).to eq 3
+    expect(@t.get_next_step(3)).to eq 4
+    expect(@t.get_next_step(4)).to eq 'final'
+  end
 end
 
