@@ -186,4 +186,13 @@ class ServiceBase
   def reload 
     @db = create_db_connection(@db_name,@config)
   end
+  def summary
+      ns = ["next you'll need to brush your teeth","now it's time for flossing","next up, mouthwash"]
+      s_desc = [
+      "flossing is key for proper oral hygene, we'll help you with technique and timing", 
+      "brushing your teeth is an important part of total body health. Plus, if you don't brush you'll never get a date",
+      "Mouthwash feels like the enemy but it's really your friend. That burning sensation is just it saying HELLO!"
+      ]
+      return {'name'=>self.class, 'progress' => rand(), 'next_step' => ns.sample(1).first, 'step_description' => s_desc.sample(1).first }
+  end 
 end

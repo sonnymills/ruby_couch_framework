@@ -82,5 +82,11 @@ describe Test do
     expect(@t.get_next_step(3)).to eq 4
     expect(@t.get_next_step(4)).to eq 'final'
   end
+  it "can return a summary of the entity" do 
+      expect(@t.summary.keys).to contain_exactly('name','progress','next_step','step_description')
+      expect(@t.summary['progress']). to be_kind_of(Float)
+      expect(@t.summary['next_step']). to be_kind_of(String)
+      
+  end
 end
 
