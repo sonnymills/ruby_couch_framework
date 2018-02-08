@@ -40,7 +40,8 @@ class ServiceBase
   end
   def add_fields_config(config)
       puts "THIS IS THE CONFIG #{config}"
-      entity_config = File.join @config_root , config
+      #entity_config = File.join @config_root , config
+      entity_config = config
       puts "trying with entity config #{entity_config} #{File.file?(entity_config)}"
       if File.file?(entity_config)
         fields = YAML.load_file(entity_config)
