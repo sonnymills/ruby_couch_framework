@@ -12,11 +12,19 @@ describe Test do
     @t.set_config_root(File.dirname(__FILE__))
     expect(@t.get_fields.kind_of?(Hash)).to be true 
   end  
+  it "can set multiple fields config roots" do 
+    @t.set_fields_config_root(['/parent','/parent/child1','/parent/child1/child2'])
+    puts "this is fields #{@t.get_fields}"
+    expect(@t.get_fields.has_key?('parent')).to be
+    expect(@t.get_fields.has_key?('child_license')).to be
+    expect(@t.get_fields.has_key?('child_2_license_something')).to be
+    
+  end 
   it "can set additional config and override" do 
     @t.add_fields_config('test_override.yml') 
     expect(@t.get_fields.has_key?('phone_number')).to be
     expect(@t.get_fields.has_key?('first_name')).to be
-  end 
+  end
   it "can handle configs in a dir tree" do 
     @t.add_fields_config('test_override.yml') 
     expect(@t.get_fields.has_key?('phone_number')).to be
