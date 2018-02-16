@@ -36,6 +36,7 @@ class ServiceBase
         named_file = File.join fcr,@db_name+".yml"
         self.add_fields_config(full_root)
         self.add_fields_config(named_file)
+        raise "no configs were loaded" unless fields.keys.length > 0 
       end
   end
   def add_fields_config(config)

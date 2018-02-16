@@ -18,8 +18,10 @@ describe Test do
     expect(@t.get_fields.has_key?('parent')).to be
     expect(@t.get_fields.has_key?('child_license')).to be
     expect(@t.get_fields.has_key?('child_2_license_something')).to be
-    
   end 
+   it "throws a descriptive error when no configs are loaded" do 
+    expect{@t.set_fields_config_root(['/no_configs_here'])}.to raise_error(/no configs were loaded/) 
+  end
   it "can set additional config and override" do 
     @t.add_fields_config('test_override.yml') 
     expect(@t.get_fields.has_key?('phone_number')).to be
