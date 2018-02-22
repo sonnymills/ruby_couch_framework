@@ -29,9 +29,7 @@ class ServiceBase
   end
   def set_fields_config_root(config_roots)
       fields_config_root = config_roots || @config_root
-      puts "I have FCR as #{fields_config_root}"
       fields_config_root.each do |fcr| 
-        puts "Adding FCR #{fcr}"
         full_root = File.join fcr,@db_name 
         named_file = File.join fcr,@db_name+".yml"
         self.add_fields_config(full_root)
@@ -40,10 +38,8 @@ class ServiceBase
       end
   end
   def add_fields_config(config)
-      puts "THIS IS THE CONFIG #{config}"
       #entity_config = File.join @config_root , config
       entity_config = config
-      puts "trying with entity config #{entity_config} #{File.file?(entity_config)}"
       if File.file?(entity_config)
         fields = YAML.load_file(entity_config)
         merge_fields(fields) 

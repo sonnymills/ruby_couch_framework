@@ -13,31 +13,34 @@ describe Test do
     expect(@t.get_fields.kind_of?(Hash)).to be true 
   end  
   it "can set multiple fields config roots" do 
-    @t.set_fields_config_root(['/parent','/parent/child1','/parent/child1/child2'])
+    @t.set_fields_config_root(['/parent','/parent/child1','/parent/child1/child2'].map{|p| File.join(File.dirname(__FILE__),p) })
     puts "this is fields #{@t.get_fields}"
     expect(@t.get_fields.has_key?('parent')).to be
     expect(@t.get_fields.has_key?('child_license')).to be
     expect(@t.get_fields.has_key?('child_2_license_something')).to be
   end 
    it "throws a descriptive error when no configs are loaded" do 
+    t = Test.new
+    t.set_config_root('/tmp')
     expect{@t.set_fields_config_root(['/no_configs_here'])}.to raise_error(/no configs were loaded/) 
   end
   it "can set additional config and override" do 
-    @t.add_fields_config('test_override.yml') 
+    @t.add_fields_config(File.join(File.dirname(__FILE__),'test_override.yml')) 
     expect(@t.get_fields.has_key?('phone_number')).to be
     expect(@t.get_fields.has_key?('first_name')).to be
   end
   it "can handle configs in a dir tree" do 
-    @t.add_fields_config('test_override.yml') 
+    @t.add_fields_config(File.join(File.dirname(__FILE__),'test_override.yml')) 
+    puts @t.get_fields
     expect(@t.get_fields.has_key?('phone_number')).to be
-    @t.add_fields_config('nested/test.yml') 
+    @t.add_fields_config(File.join(File.dirname(__FILE__),'nested/test.yml')) 
     expect(@t.get_fields.has_key?('nested_first_name')).to be
   end
   it "throws a descriptive error when a key is duplicated" do 
-    expect{@t.add_fields_config('same_name.yml')}.to raise_error(/there are duplicate/) 
+    expect{@t.add_fields_config(File.join(File.dirname(__FILE__),'same_name.yml'))}.to raise_error(/there are duplicate/) 
   end
   it "can handle configs with just a path" do 
-    @t.add_fields_config('nested') 
+    @t.add_fields_config(File.join(File.dirname(__FILE__),'nested')) 
     expect(@t.get_fields.has_key?('first_file')).to be
     expect(@t.get_fields.has_key?('second_file')).to be
   end
@@ -86,7 +89,7 @@ describe Test do
     expect(@t.get_step_for_field('step_2_name')).to eq 2 
   end
   it "can get the next step" do 
-    @t.add_fields_config('nested') 
+    @t.add_fields_config(File.join(File.dirname(__FILE__),'nested')) 
     expect(@t.get_next_step(1)).to eq 2
     expect(@t.get_next_step(2)).to eq 3
     expect(@t.get_next_step(3)).to eq 4
@@ -99,4 +102,3 @@ describe Test do
       
   end
 end
-
