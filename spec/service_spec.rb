@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'test'
+require 'landuse'
 describe Test do
   before :each do
     @t = Test.new
@@ -37,11 +38,7 @@ describe Test do
     expect(@t.get_fields.has_key?('nested_first_name')).to be
   end
   it "can search the entire conifg roots for the config" do
-#  this is the config roots: ["/Users/aimee/projects/c360-base/services/or", "/Users/aimee/projects/c360-base/services/or/deschutes", "/Users/aimee/projects/c360-base/services/or/deschutes/bend"]
-#  this is the config: stakeholder.yml
-      t = Test.new
-      puts "these are the keys1: #{t.get_fields.keys}"
-      t.set_fields_config_root(['/parent','/parent/child1','/parent/child1/child2'].map{|p| File.join(File.dirname(__FILE__),p) })
+      t = Landuse.new(['/parent','/parent/child1','/parent/child1/child2'].map{|p| File.join(File.dirname(__FILE__),p) })
 
       t.add_fields_config('landuse.yml')
       
