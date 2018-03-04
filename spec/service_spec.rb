@@ -36,6 +36,18 @@ describe Test do
     @t.add_fields_config(File.join(File.dirname(__FILE__),'nested/test.yml')) 
     expect(@t.get_fields.has_key?('nested_first_name')).to be
   end
+  it "can search the entire conifg roots for the config" do
+#  this is the config roots: ["/Users/aimee/projects/c360-base/services/or", "/Users/aimee/projects/c360-base/services/or/deschutes", "/Users/aimee/projects/c360-base/services/or/deschutes/bend"]
+#  this is the config: stakeholder.yml
+      t = Test.new
+      puts "these are the keys1: #{t.get_fields.keys}"
+      t.set_fields_config_root(['/parent','/parent/child1','/parent/child1/child2'].map{|p| File.join(File.dirname(__FILE__),p) })
+
+      t.add_fields_config('landuse.yml')
+      
+      puts "these are the keys: #{t.get_fields.keys}"
+      expect(t.get_fields.has_key?('child_2_landuse')).to be
+  end
   it "throws a descriptive error when a key is duplicated" do 
     expect{@t.add_fields_config(File.join(File.dirname(__FILE__),'same_name.yml'))}.to raise_error(/there are duplicate/) 
   end
