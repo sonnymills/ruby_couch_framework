@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'test'
 require 'landuse'
+require 'testbroken'
 describe Test do
   before :each do
     @t = Test.new
@@ -21,9 +22,7 @@ describe Test do
     expect(@t.get_fields.has_key?('child_2_license_something')).to be
   end 
    it "throws a descriptive error when no configs are loaded" do 
-    t = Test.new
-    t.set_config_root('/tmp')
-    expect{@t.set_fields_config_root(['/no_configs_here'])}.to raise_error(/no configs were loaded/) 
+    expect{t = TestBroken.new}.to raise_error(/no configs were loaded/) 
   end
   it "can set additional config and override" do 
     @t.add_fields_config(File.join(File.dirname(__FILE__),'test_override.yml')) 

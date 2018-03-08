@@ -1,12 +1,12 @@
 require 'service_base' 
-class Test < ServiceBase 
+class TestBroken < ServiceBase 
   attr_accessor :id, :created
   def initialize
-    super('test')  
+    super('test_broken')  
     self.set_fields_config_root([File.dirname(__FILE__)])
   end
   def get_form_fields 
-    super('test') 
+    super('test_broken') 
   end 
 end
 

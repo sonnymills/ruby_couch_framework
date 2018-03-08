@@ -35,7 +35,8 @@ class ServiceBase
         self.add_fields_config(full_root)
         self.add_fields_config(named_file)
       end
-      raise "no configs were loaded" unless fields.keys.length > 0 
+      puts "THIS IS FIELDS #{@fields.keys}"
+      raise "no configs were loaded" unless @fields.keys.length > 0 
   end
   def add_fields_config(config)
       #entity_config = File.join @config_root , config
@@ -162,9 +163,6 @@ class ServiceBase
   end
   def is_finalized?
       get_protected('finalized')
-  end
-  def get_form_fields_by_step(step)
-      return self.get_form_fields.select{|k,v| v['step'].to_s == step.to_s}
   end
   def get_fields_by_step(step)
       return self.get_fields.select{|k,v| v['step'].to_s == step.to_s}
