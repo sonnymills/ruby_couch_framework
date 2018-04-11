@@ -1,4 +1,4 @@
-#service_helper.rb
+#service_base.rb
 require 'json/ext'
 require 'couchrest'
 require 'dev_json_store'
@@ -17,7 +17,9 @@ class ServiceBase
     @db_name = db_name
     raise "configuration not hash as expected got #{@config.class}" unless @config.kind_of?(Hash)
     @db = create_db_connection(@db_name,@config_root)
+    @doc = Hash.new 
     @fields = Hash.new
+    @doc['protected'] = Hash.new
     self.add_fields_config("#{db_name}.yml")
   end
 
@@ -35,7 +37,6 @@ class ServiceBase
         self.add_fields_config(full_root)
         self.add_fields_config(named_file)
       end
-      puts "THIS IS FIELDS #{@fields.keys}"
       raise "no configs were loaded" unless @fields.keys.length > 0 
   end
   def add_fields_config(config)
@@ -55,7 +56,9 @@ class ServiceBase
       end
   end 
   def merge_fields(fields)
-      if (fields.keys & @fields.keys).length > 0 #check for hash key intersection
+      if (fields.keys & 
+          @fields.keys).length > 0 
+          #check for hash key intersection
          raise "there are duplicate fields #{fields.keys & @fields.keys}" 
       end
        @fields.merge!(fields) 
@@ -66,7 +69,7 @@ class ServiceBase
       load(@id)
   end
   def seed_doc(default_fields)
-    response =@db.save_doc('fields' => default_fields.keys,'protected'=>{})
+    response =@db.save_doc('fields' => default_fields.keys, 'protected' => @doc['protected'])
     response['id']
   end 
   def temp

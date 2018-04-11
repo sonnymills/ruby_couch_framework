@@ -14,6 +14,11 @@ describe Test do
     @t.set_config_root(File.dirname(__FILE__))
     expect(@t.get_fields.kind_of?(Hash)).to be true 
   end  
+  it "doesn't clobber protected on create" do 
+    @t.set_protected('foo','mung') 
+    @t.create
+    expect(@t.get_protected('foo')).to eq 'mung'
+  end
   it "can set multiple fields config roots" do 
     @t.set_fields_config_root(['/parent','/parent/child1','/parent/child1/child2'].map{|p| File.join(File.dirname(__FILE__),p) })
     puts "this is fields #{@t.get_fields}"
