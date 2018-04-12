@@ -11,8 +11,11 @@ class SearchBase < ServiceBase
 		resp
 	end
 	def all_doc_ids(params = nil)
-      super(params)
+      @db.all_doc_ids
 	end
+  def doc_exists?(id)
+      return self.all_doc_ids.include?(id)
+  end
   def get_ids_with_details(search_hash, params = {})
       results = Array.new
       params[:block] = params[:block] || 'fields'
