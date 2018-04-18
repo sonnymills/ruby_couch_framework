@@ -72,8 +72,7 @@ class ServiceBase
   end
   def temp
       default_fields = get_fields
-      @doc = {'fields' => default_fields.keys }
-      generate_accessors
+      generate_accessors({'fields' => default_fields.keys })
   end
   def save
     data = Hash.new
@@ -91,10 +90,11 @@ class ServiceBase
     begin
       @doc = @db.get(id)
     rescue Exception => e
+      puts "Failed to get the doc because #{e.message}"
       @doc = Hash.new
     end
     begin
-      generate_accessors
+      generate_accessors(@doc)
       self.id = id
     rescue Exception => e
       raise "failed to generate accessors because #{e.message}"
@@ -120,9 +120,9 @@ class ServiceBase
       end
       return db
   end
-  def generate_accessors
-      raise "@doc not defined" unless @doc
-      data = @doc.to_hash
+  def generate_accessors(doc)
+      raise "doc not defined" unless doc
+      data = doc.to_hash
       if data.kind_of?(Hash) and data.has_key?('fields')
         data['fields'].each do |a,v|
           self.class.send(:attr_accessor,a)
