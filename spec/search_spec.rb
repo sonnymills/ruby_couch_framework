@@ -21,7 +21,7 @@ describe SearchBase do
     end  
   end
   it "can get all ids" do
-    expect(@s.get_all_ids).to be_kind_of(Array)
+    expect(@s.all_doc_ids).to be_kind_of(Array)
   end
   it "can can find a document with an id" do 
     expect(@s.doc_exists?(@id)).to be 

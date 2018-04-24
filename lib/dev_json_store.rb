@@ -22,8 +22,10 @@ class DevJsonStore
   end
   def get_keys
   end
-  def all_doc_ids
-      return @db_hash.keys
+  def all_docs
+      rh = Hash.new 
+      rh['rows'] = @db_hash.keys.map{|id| {"id" => id} }
+      return rh  
   end
   def save_doc(data)
       doc_id = @loaded_id || SecureRandom.uuid 

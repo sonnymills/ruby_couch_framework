@@ -143,9 +143,6 @@ class ServiceBase
           #puts "value is now set to #{i_v}"
         end
   end
-  def get_all_ids(params = nil)
-        @db.all_doc_ids
-  end
   def upload_attachment(attachment_path,filename,field)
       s = S3Uploader.new
       key = [self.class.name.downcase,@id,field].join('/')
