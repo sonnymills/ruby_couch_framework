@@ -1,6 +1,7 @@
 *.swp
 *.gem
 *.rbc
+.DS_store
 /lib/development/
 /spec/development/
 /.config

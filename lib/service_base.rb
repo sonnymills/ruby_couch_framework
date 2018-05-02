@@ -4,6 +4,7 @@ require 'couchrest'
 require 'dev_json_store'
 require 'yaml'
 require 'config_helper'
+require 's3_uploader'
 
 class ServiceBase
   include ConfigLoader

@@ -11,3 +11,6 @@ gem "couchrest", "~> 2.0"
 
 # Added at 2017-12-15 13:40:03 -0800 by sonnymills:
 gem "bcrypt", "~> 3.1"
+
+gem 'aws-sdk-core'
+gem 'aws-sdk-s3'
