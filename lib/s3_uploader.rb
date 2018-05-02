@@ -28,7 +28,7 @@ class S3Uploader
       begin
         response = nil 
         File.open(filepath,'rb') do |file|
-          response = @s3.put_object(bucket: @bucket, key: unique_key, body: file, acl: 'public-read')
+          response = @s3.put_object(bucket: @bucket, key: unique_key, body: file, acl: 'private')
         end
         s3obj = Aws::S3::Object.new(@bucket,unique_key)
         return s3obj.public_url
