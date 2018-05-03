@@ -10,3 +10,10 @@ development:
     everything: 'dev-c360'
   aws_key: AKIAIBH5QRQ2PZFPSRFQ
   aws_secret: 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
+production:
+  couch_box: localhost 
+  port: 5984
+  buckets:
+    everything: 'prod-c360'
+  aws_key: AKIAIBH5QRQ2PZFPSRFQ
+  aws_secret: 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
