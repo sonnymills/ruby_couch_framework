@@ -1,4 +1,4 @@
-#service_base.rb
+#devservice_base.rb
 require 'json/ext'
 require 'couchrest'
 require 'dev_json_store'
@@ -153,11 +153,11 @@ class ServiceBase
       return path
   end
   def upload_image(attachment_path,filename,field)
-      s = S3Uploader.new('profile-images', 'public')
+      s = S3Uploader.new('profile-images', 'public-read')
       key = [self.class.name.downcase,@id,field].join('/')
       raise "missing required parameter" unless attachment_path && key
 
-      path = s.upload(attachment_path,key,filename, 'public')
+      path = s.upload(attachment_path,key,filename, 'public-read')
       return path
   end
   def create_and_populate(data)
