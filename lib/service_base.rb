@@ -153,7 +153,7 @@ class ServiceBase
       return path
   end
   def upload_image(attachment_path,filename,field)
-      s = S3Uploader.new('profile-images', 'public-read')
+      s = S3Uploader.new('profile_images', 'public-read')
       key = [self.class.name.downcase,@id,field].join('/')
       raise "missing required parameter" unless attachment_path && key
 
