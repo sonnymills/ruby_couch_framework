@@ -1,6 +1,7 @@
 local:
   buckets:
     everything: 'dev-c360'
+    profile_images: 'dev-c360-profile-images'
   aws_key: AKIAIBH5QRQ2PZFPSRFQ
   aws_secret: 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
 development:
@@ -8,6 +9,7 @@ development:
   port: 5984
   buckets:
     everything: 'dev-c360'
+    profile_images: 'dev-c360-profile-images'
   aws_key: AKIAIBH5QRQ2PZFPSRFQ
   aws_secret: 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
 production:
@@ -15,5 +17,6 @@ production:
   port: 5984
   buckets:
     everything: 'prod-c360'
+    profile_images: 'prod-c360-profile-images'
   aws_key: AKIAIBH5QRQ2PZFPSRFQ
   aws_secret: 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

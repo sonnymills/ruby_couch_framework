@@ -145,11 +145,19 @@ class ServiceBase
         end
   end
   def upload_attachment(attachment_path,filename,field)
-      s = S3Uploader.new
+      s = S3Uploader.new('everything', 'private')
       key = [self.class.name.downcase,@id,field].join('/')
       raise "missing required parameter" unless attachment_path && key
 
-      path = s.upload(attachment_path,key,filename)
+      path = s.upload(attachment_path,key,filename, 'private')
+      return path
+  end
+  def upload_image(attachment_path,filename,field)
+      s = S3Uploader.new('profile-images', 'public')
+      key = [self.class.name.downcase,@id,field].join('/')
+      raise "missing required parameter" unless attachment_path && key
+
+      path = s.upload(attachment_path,key,filename, 'public')
       return path
   end
   def create_and_populate(data)
