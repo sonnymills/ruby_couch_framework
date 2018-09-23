@@ -78,17 +78,14 @@ class SearchBase < ServiceBase
       query['q'] += " AND type:#{query['cat']}"
     
     end 
-    if query.has_key?('cause') and query['cause'].length > 1 
-      query['q'] += " AND cause:#{query['cause']}"
-    end 
     
-    if query.has_key?('min') ||  query.has_key?('max') 
-      min = 0 
-      max = 10000000000
-      min = query['min'] if query['min'] 
-      max = query['max'] if query['max']
-      query['q'] += " AND total_value<double>:[ #{min} TO #{max}]" 
-    end
+   # if query.has_key?('min') ||  query.has_key?('max') 
+   #   min = 0 
+   #   max = 10000000000
+   #   min = query['min'] if query['min'] 
+   #   max = query['max'] if query['max']
+   #   query['q'] += " AND total_value<double>:[ #{min} TO #{max}]" 
+   # end
     
     page = query['p'].to_i 
     query.delete('p')
@@ -98,8 +95,9 @@ class SearchBase < ServiceBase
     query.merge!(pagination)
     
 		index = query["index"] || "package_and_items"
+    index_name = "#{name}/_design/search/#{index}"
    puts "query is #{query}" 
-		result =  @db.fti(name,index,query)
+		result =  @db.fti(index_name,query)
 		ids =  result['rows'].map{|r| r['id']}
     return { "total" => result['total_rows'], "ids" => ids, "rows" => result["rows"] }
 		
