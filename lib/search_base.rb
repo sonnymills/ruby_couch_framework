@@ -11,10 +11,10 @@ class SearchBase < ServiceBase
 		resp
 	end
 	def all_doc_ids(params = nil)
-      @db.all_docs['rows'].select{|r| r['id'] !~ /_design/}.map{|r| r['id']} 
+      @db.all_doc_ids
 	end
   def doc_exists?(id)
-       self.all_doc_ids.include?(id)
+      return self.all_doc_ids.include?(id)
   end
   def get_ids_with_details(search_hash, params = {})
       results = Array.new
@@ -72,20 +72,7 @@ class SearchBase < ServiceBase
       #need some custom args here?
     else
       query['q'] = '*' 
-      query['sort'] = '\created_date'
     end
-    if query.has_key?('cat') 
-      query['q'] += " AND type:#{query['cat']}"
-    
-    end 
-    
-   # if query.has_key?('min') ||  query.has_key?('max') 
-   #   min = 0 
-   #   max = 10000000000
-   #   min = query['min'] if query['min'] 
-   #   max = query['max'] if query['max']
-   #   query['q'] += " AND total_value<double>:[ #{min} TO #{max}]" 
-   # end
     
     page = query['p'].to_i 
     query.delete('p')
@@ -95,11 +82,9 @@ class SearchBase < ServiceBase
     query.merge!(pagination)
     
 		index = query["index"] 
-    raise "NO INDEX IN QUERY" unless index 
-    #_fti/local/sensor_data/_design/search/sensor
-    index_name = "/local/#{name}/_design/search/#{index}"
+    
    puts "query is #{query}" 
-		result =  @db.fti(index_name,query)
+		result =  @db.fti(name,index,query)
 		ids =  result['rows'].map{|r| r['id']}
     return { "total" => result['total_rows'], "ids" => ids, "rows" => result["rows"] }
 		
