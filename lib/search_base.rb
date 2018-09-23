@@ -94,8 +94,10 @@ class SearchBase < ServiceBase
     pagination = {'limit' => page_size, 'skip' => (page > 0 ?  page - 1 : 0 )*page_size }
     query.merge!(pagination)
     
-		index = query["index"] || "package_and_items"
-    index_name = "#{name}/_design/search/#{index}"
+		index = query["index"] 
+    raise "NO INDEX IN QUERY" unless index 
+    #_fti/local/sensor_data/_design/search/sensor
+    index_name = "/local/#{name}/_design/search/#{index}"
    puts "query is #{query}" 
 		result =  @db.fti(index_name,query)
 		ids =  result['rows'].map{|r| r['id']}

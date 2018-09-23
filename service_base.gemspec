@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'service_base'
-  s.version     = '0.1.00'
+  s.version     = '0.1.01'
   s.date        = '2018-09-22'
   s.summary     = "kill rails with couch"
   s.description = "kill moar rails with couch and less kitchen-sink"
