@@ -10,7 +10,6 @@ describe S3Uploader do
 
      uploaded_file_location = s.upload('./spec/uploader/test.png', "super/test/key/#{now}", 'uploader_field_name', 'private')
     
-     puts "Uploaded URL: #{uploaded_file_location}"     
      expect(expected_file_location).to eq(uploaded_file_location)
  end
  it "can upload a file to the public profile image bucket" do
@@ -20,7 +19,6 @@ describe S3Uploader do
 
      uploaded_file_location = s.upload('./spec/uploader/test.png', "super/test/key/#{now}", 'uploader_field_name','public-read')
     
-     puts "Uploaded URL: #{uploaded_file_location}"     
      expect(expected_file_location).to eq(uploaded_file_location)
  end
 end

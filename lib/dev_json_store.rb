@@ -22,6 +22,9 @@ class DevJsonStore
   end
   def get_keys
   end
+  def all_doc_ids
+    return @db_hash.keys
+  end
   def all_docs
       rh = Hash.new 
       rh['rows'] = @db_hash.keys.map{|id| {"id" => id} }

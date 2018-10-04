@@ -18,8 +18,9 @@ class S3Uploader
     @s3 = Aws::S3::Client.new
     begin
       @s3.create_bucket({acl: privacy, bucket: @bucket })
-    rescue Exception => e 
-      puts "bucket creation failed with #{e.message}"
+    rescue Exception => e
+      #TODO -- should only rescue if bucket exists, otherwise the exception should be raised
+      #puts "bucket creation failed with #{e.message}"
     end
 	end	
 	def upload(filepath, key, filename, privacy)

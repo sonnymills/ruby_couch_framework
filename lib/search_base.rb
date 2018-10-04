@@ -19,8 +19,7 @@ class SearchBase < ServiceBase
   def get_ids_with_details(search_hash, params = {})
       results = Array.new
       params[:block] = params[:block] || 'fields'
-      puts "set block to #{params[:block]}"
-      
+
       search_hash.each do |k,v| 
 					params[:key] = v
           view = "accessor/#{[k,params[:block]].join('-')}"
@@ -28,6 +27,7 @@ class SearchBase < ServiceBase
           r = self.find(view,params)   
           results.push(r['rows'].map{|r| r['id']})
         rescue Exception => e
+          #TODO -- should handle specific exceptions not just all of them generically
           #puts "this is the exception cause #{e.message}"
           generate_view(k,params[:block]) if e.message =~ /^404/
           r = self.find(view,params)   
@@ -45,12 +45,12 @@ class SearchBase < ServiceBase
         r = self.find(view,{:keys => ids})   
         results.push(r['rows'].map{|r| r['id']})
       rescue Exception => e
-        puts "this is the exception cause |#{e.message}"
+        #puts "this is the exception cause |#{e.message}"
         if e.message =~ /^404/
-          puts 'matched error and trying to generate' 
+          #puts 'matched error and trying to generate'
           generate_view(attr,'fields') 
         else
-          puts 'did not catch 404'
+          #puts 'did not catch 404'
         end
         r = self.find(view,{:keys => ids})   
         results.push(r['rows'].map{|r| r['id']})
@@ -67,7 +67,7 @@ class SearchBase < ServiceBase
 	end
 	def search(name,query) 
 		#puts "trying to render view #{view}"
-		puts "sending query #{query} #{name}"
+		#puts "sending query #{query} #{name}"
     if query['q'] and query['q'].length > 0
       #need some custom args here?
     else
@@ -83,7 +83,6 @@ class SearchBase < ServiceBase
     
 		index = query["index"] 
     
-   puts "query is #{query}" 
 		result =  @db.fti(name,index,query)
 		ids =  result['rows'].map{|r| r['id']}
     return { "total" => result['total_rows'], "ids" => ids, "rows" => result["rows"] }
@@ -97,17 +96,12 @@ class SearchBase < ServiceBase
       @ac_doc = nil
       
       begin
-        puts "trying to load view"
         @ac_doc = @db.get('_design/accessor')
         raise "fail" unless @ac_doc
       rescue 
-        puts "failed to load view"
         @db.save_doc({ "_id" => "_design/accessor", 'views' => {}})
-        puts "saved view"
         @ac_doc = @db.get('_design/accessor')
-        puts "loaded db obj"
       end
-      puts "this is the @ac_doc #{@ac_doc['views']}"
       @ac_doc['views'][ [key,block].join('-') ] = { 'map' => "function(doc) {\n  emit(doc['#{block}']['#{key}'], doc.id);\n}" }
       @db.save_doc(@ac_doc) 
       self.reload

@@ -21,7 +21,6 @@ describe Test do
   end
   it "can set multiple fields config roots" do 
     @t.set_fields_config_root(['/parent','/parent/child1','/parent/child1/child2'].map{|p| File.join(File.dirname(__FILE__),p) })
-    puts "this is fields #{@t.get_fields}"
     expect(@t.get_fields.has_key?('parent')).to be
     expect(@t.get_fields.has_key?('child_license')).to be
     expect(@t.get_fields.has_key?('child_2_license_something')).to be
@@ -36,7 +35,6 @@ describe Test do
   end
   it "can handle configs in a dir tree" do 
     @t.add_fields_config(File.join(File.dirname(__FILE__),'test_override.yml')) 
-    puts @t.get_fields
     expect(@t.get_fields.has_key?('phone_number')).to be
     @t.add_fields_config(File.join(File.dirname(__FILE__),'nested/test.yml')) 
     expect(@t.get_fields.has_key?('nested_first_name')).to be
@@ -46,7 +44,6 @@ describe Test do
 
       t.add_fields_config('landuse.yml')
       
-      puts "these are the keys: #{t.get_fields.keys}"
       expect(t.get_fields.has_key?('child_2_landuse')).to be
   end
   it "throws a descriptive error when a key is duplicated" do 

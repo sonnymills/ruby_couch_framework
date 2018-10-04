@@ -53,7 +53,7 @@ class ServiceBase
           merge_fields(fields)
         end
       else
-        puts "unable to match #{entity_config} with file or directory moving on"
+        #puts "unable to match #{entity_config} with file or directory moving on"
       end
   end
   def merge_fields(fields)
@@ -91,7 +91,7 @@ class ServiceBase
     begin
       @doc = @db.get(id)
     rescue Exception => e
-      puts "Failed to get the doc because #{e.message}"
+      #puts "Failed to get the doc because #{e.message}"
       @doc = Hash.new
     end
     begin

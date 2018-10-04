@@ -17,7 +17,7 @@ describe SearchBase do
     begin
       File.unlink(File.join File.dirname(__FILE__), "./development/test_db.yml")
     rescue 
-      puts "no DB file to delete... running with couch?"
+      #puts "no DB file to delete... running with couch?"
     end  
   end
   it "can get all ids" do
@@ -28,7 +28,6 @@ describe SearchBase do
     expect(@s.doc_exists?('202939')).to be false
   end
   it "can get only ids with specific attribute" do
-     puts "inspecting s #{@s.inspect}"
      ids = @s.get_ids_with_details('first_name'=> 'testie')
      expect(ids.length).to eq(1)
   end
