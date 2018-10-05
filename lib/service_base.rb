@@ -8,7 +8,7 @@ require 's3_uploader'
 
 class ServiceBase
   include ConfigLoader
-  attr_accessor :db, :doc, :config, :id, :db_name, :fields
+  attr_accessor :db, :doc, :config, :id, :db_name, :fields, :data_store_root, :config_root
 
   def initialize(db_name, options_hash = nil)
     @config_root = File.dirname(caller.first.split(':').first)
@@ -22,11 +22,11 @@ class ServiceBase
     @db_name = db_name
     raise "configuration not hash as expected got #{@config.class}" unless @config.kind_of?(Hash)
     begin
-      data_store_root = options_hash['data_store_root']
-    rescue
-      data_store_root = @config_root
+      @data_store_root = options_hash[:data_store_root]
+    rescue Exception => e
+      @data_store_root = @config_root
     end
-    @db = create_db_connection(@db_name, data_store_root)
+    @db = create_db_connection(@db_name, @data_store_root)
     @doc = Hash.new
     @fields = Hash.new
     @doc['protected'] = Hash.new

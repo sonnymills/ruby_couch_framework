@@ -11,8 +11,14 @@ describe 'ServiceBase' do
     expect(sb.id).to be
 
   end
-  it "can instantiate flatfile data store in specified root" do
+  it "can set an alternative config root and preserve config root" do
     sb = ServiceBase.new('test', {data_store_root: './override_dev_root' })
+    expect(sb.data_store_root).to eq './override_dev_root'
+    expect(sb.config_root).to eq File.expand_path('./spec')
+  end
+
+  it "can instantiate flatfile data store in specified root" do
+    sb = ServiceBase.new('test', {data_store_root: '/override_dev_root' })
     sb.create
     sb.save
     expect('./override_dev_root/test_db.yml').to be_an_existing_file

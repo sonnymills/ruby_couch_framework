@@ -7,10 +7,6 @@ class DevJsonStore
       @db_hash = load_file_db(@db_name)
       @db_hash = Hash.new unless @db_hash.kind_of?(Hash)
   end
-  def get_db_file(db_name)
-    FileUtils.mkdir_p("#{@config_root}/development")unless File.directory?("#{@config_root}/development")
-    return File.join(@config_root, "development/#{db_name}_db.yml")
-  end
   def load_file_db(db_name)
       db_file = get_db_file(db_name)
       @db_hash = Hash.new
@@ -19,6 +15,10 @@ class DevJsonStore
       else 
       end
       return @db_hash
+  end
+  def get_db_file(db_name)
+    FileUtils.mkdir_p("#{@config_root}/development")unless File.directory?("#{@config_root}/development")
+    return File.join(@config_root, "development/#{db_name}_db.yml")
   end
   def get_keys
   end
