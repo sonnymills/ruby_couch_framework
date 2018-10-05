@@ -2,5 +2,5 @@ local:
   couch_box: localhost 
   port: 5984
 development:
-  couch_box: localhost 
+  couch_box: admin:password@localhost 
   port: 5984
