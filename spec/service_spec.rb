@@ -106,4 +106,8 @@ describe Test do
     expect(@t.summary['next_step']).to be_kind_of(String)
 
   end
+  it "raised a IdRequired exception when the id is not found" do
+    
+    expect{@t.load(nil)}.to raise_error IdRequired
+  end
 end

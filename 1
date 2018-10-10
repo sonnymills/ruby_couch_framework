@@ -5,7 +5,6 @@ require 'dev_json_store'
 require 'yaml'
 require 'config_helper'
 require 's3_uploader'
-require 'errors'
 
 class ServiceBase
   include ConfigLoader
@@ -104,7 +103,7 @@ class ServiceBase
   end
 
   def load(id)
-    raise IdRequired unless id
+    raise "ID needed to load" unless id
     begin
       @doc = @db.get(id)
     rescue Exception => e
@@ -114,8 +113,8 @@ class ServiceBase
     begin
       generate_accessors(@doc)
       self.id = id
-    rescue IdNotFound
-      raise "failed to generate accessors because id not found"
+    rescue Exception => e
+      raise "failed to generate accessors because #{e.message}"
     end
   end
 
@@ -143,7 +142,7 @@ class ServiceBase
   end
 
   def generate_accessors(doc)
-    raise IdNotFound unless doc
+    raise "doc not defined" unless doc
     data = doc.to_hash
     if data.kind_of?(Hash) and data.has_key?('fields')
       data['fields'].each do |a, v|
