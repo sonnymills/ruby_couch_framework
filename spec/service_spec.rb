@@ -15,7 +15,7 @@ describe Test do
     expect(@t.get_protected('foo')).to eq 'mung'
   end
   it "can set multiple fields config roots" do
-    @t.set_fields_config_root(['/parent', '/parent/child1', '/parent/child1/child2'].map {|p| File.join(File.dirname(__FILE__), p)})
+    @t.set_fields_config_root(%w(/parent /parent/child1 /parent/child1/child2).map {|p| File.join(File.dirname(__FILE__), p)})
     expect(@t.get_fields.has_key?('parent')).to be
     expect(@t.get_fields.has_key?('child_license')).to be
     expect(@t.get_fields.has_key?('child_2_license_something')).to be
@@ -35,7 +35,7 @@ describe Test do
     expect(@t.get_fields.has_key?('nested_first_name')).to be
   end
   it "can search the entire conifg roots for the config" do
-    t = Landuse.new(['/parent', '/parent/child1', '/parent/child1/child2'].map {|p| File.join(File.dirname(__FILE__), p)})
+    t = Landuse.new(%w(/parent /parent/child1 /parent/child1/child2).map {|p| File.join(File.dirname(__FILE__), p)})
 
     t.add_fields_config('landuse.yml')
 
