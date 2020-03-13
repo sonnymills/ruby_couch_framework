@@ -1,22 +1,19 @@
 local:
   buckets:
-    everything: 'dev-c360'
-    profile_images: 'dev-c360-profile-images'
-  aws_key: AKIAIBH5QRQ2PZFPSRFQ
-  aws_secret: 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
+    everything: 'dev'
+  aws_key: key_goes_here
+  aws_secret: secret_goes_here
 development:
   couch_box: localhost 
   port: 5984
   buckets:
-    everything: 'dev-c360'
-    profile_images: 'dev-c360-profile-images'
-  aws_key: AKIAIBH5QRQ2PZFPSRFQ
-  aws_secret: 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
+    everything: 'dev'
+  aws_key: key_goes_here
+  aws_secret: secret_goes_here
 production:
   couch_box: localhost 
   port: 5984
   buckets:
-    everything: 'prod-c360'
-    profile_images: 'prod-c360-profile-images'
-  aws_key: AKIAIBH5QRQ2PZFPSRFQ
-  aws_secret: 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
+    everything: 'prod'
+  aws_key: key_goes_here
+  aws_secret: secret_goes_here
